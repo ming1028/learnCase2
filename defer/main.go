@@ -1,0 +1,21 @@
+package main
+
+import "fmt"
+
+func cal(str string, a, b int) int {
+	ret := a + b
+	fmt.Println(str, a, b, ret)
+	return ret
+}
+
+func main() {
+	a := 1
+	b := 2
+	defer cal("11", a, cal("22", a, b))
+	a = 3
+	defer cal("33", a, cal("44", a, b))
+	// 22 1 2 3
+	// 44 3 2 5
+	// 33 3 5 8
+	// 11 1 3 4
+}
