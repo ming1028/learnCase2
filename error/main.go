@@ -26,8 +26,13 @@ func main() {
 
 	newErr := MyError{err, "错误!"}
 	//fmt.Printf("%#v\n", newErr)
-	// fmt.Println类型断言，查看是否实现error接口和string接口，如果实现就会调用
+	// fmt.Println类型断言，查看是否实现error(Error方法)接口和string（ToString方法）接口，如果实现就会调用
 	fmt.Println(newErr)
+	e := errors.New("原始错误e")
+	w := fmt.Errorf("Wrap了一个错误：%w", e)
+	fmt.Println(w)
+
+	fmt.Println(errors.Unwrap(w))
 }
 
 func add(a, b int) (int, error) {
