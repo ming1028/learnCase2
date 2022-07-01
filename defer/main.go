@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// defer 后进先出，go返回机制中，执行return语句后，Go会创建一个临时变量保存返回值
+
 func cal(str string, a, b int) int {
 	ret := a + b
 	fmt.Println(str, a, b, ret)
@@ -18,4 +20,23 @@ func main() {
 	// 44 3 2 5
 	// 33 3 5 8
 	// 11 1 3 4
+	fmt.Println("main return1", test1())
+	fmt.Println("main return2", test2())
+}
+
+func test1() int {
+	i := 0
+	defer func() {
+		i += 1
+		fmt.Println("defer test1")
+	}()
+	return i //创建一个临时变量保存返回值
+}
+
+func test2() (i int) {
+	defer func() {
+		i += 1
+		fmt.Println("defer test2")
+	}()
+	return i // 有名返回值
 }
