@@ -10,9 +10,17 @@ import (
 func main() {
 	g := errgroup.Group{}
 	//ctx, cancel := context.WithCancel(context.Background()) // 主动取消
-	ctx, _ := context.WithTimeout(context.Background(), time.Second*5) // 定时取消
+	ctx, _ := context.WithTimeout(context.Background(), time.Second*5) // 超时取消
 	g.Go(func() error {
-		watchDog(ctx, "watchDog")
+		watchDog(ctx, "watchDog 1")
+		return nil
+	})
+	g.Go(func() error {
+		watchDog(ctx, "watchDog 2")
+		return nil
+	})
+	g.Go(func() error {
+		watchDog(ctx, "watchDog 3")
 		return nil
 	})
 	time.Sleep(time.Second * 15)
