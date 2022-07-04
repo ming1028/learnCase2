@@ -29,6 +29,18 @@ func main() {
 	/*sip := &si type *fmt.Stringer is pointer to interface, not interface
 	printString(sip)*/
 	// 指向具体类型的指针可以实现一个接口，但是指向接口的指针永远不可能实现该接口
+
+	fmt.Printf("内存地址为%p\n", &p)
+	// Go语言中的函数传递是值传递，将原有数据拷贝
+	// 值类型：浮点型、整型、字符串、布尔、数组
+
+	// 不管字面量还是make函数最终都是调用runtime.makemap函数，返回一个*hmap
+
+	// chan 调用runtime.makechan函数，返回一个*hchan
+	// map、chan、函数、接口、slice都可以称为引用类型
+
+	// make、new函数属于显示声明并初始化，如果没有显式声明初始化，那么该变量的默认值
+	// 就是对应类型的零值
 }
 
 /*type Stringer interface {
