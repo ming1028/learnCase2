@@ -20,6 +20,15 @@ func main() {
 	fmt.Println(p.province)
 	printString(p)
 	printString(p.addr)
+
+	var si fmt.Stringer = address{
+		province: "河南",
+		city:     "三门峡",
+	}
+	printString(si) // si interface
+	/*sip := &si type *fmt.Stringer is pointer to interface, not interface
+	printString(sip)*/
+	// 指向具体类型的指针可以实现一个接口，但是指向接口的指针永远不可能实现该接口
 }
 
 /*type Stringer interface {
