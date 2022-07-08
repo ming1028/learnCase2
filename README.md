@@ -60,5 +60,21 @@ type StringHeader struct {
     Len int
 }
 ```
+
 *SliceHeader可以提供 *StringHeader所需的Data和Len字段，可以转换
 *StringHeader不能转*SliceHeader 缺少Cap字段，需要自己补上
+
+### 单元测试
+
+* go文件必须以_test.go结尾
+* 文件名_test.go
+* 函数必须以Test开头，是可导出、公开的函数
+* 测试函数的签名必须接受一个指向testing.T类型的指针，并且不能返回任何值
+* 函数名：Test+要测试的函数名
+
+***
+### 基准测试
+
+* 必须以Benchmark开头
+* 函数的签名必须接受一个指向testing.B类型的指针，并且不返回任何值
+* b.N是基准测试框架提供，表示循环次数
