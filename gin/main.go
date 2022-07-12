@@ -23,6 +23,8 @@ func main() {
 	g.GET("/users", listUsers)
 	g.GET("/users/:id", getUser)
 	g.POST("/users", createUser)
+	g.DELETE("/users/:id", deleteUser)
+	g.PATCH("/users/:id", updateUserName)
 	g.Run(":8080")
 }
 
@@ -63,6 +65,44 @@ func createUser(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "请输入用户名称",
+		})
+	}
+}
+
+func deleteUser(c *gin.Context) {
+	id := c.Param("id")
+	i := -1
+	for index, u := range users {
+		if strings.EqualFold(id, strconv.Itoa(u.ID)) {
+			i = index
+			break
+		}
+	}
+	if i >= 0 {
+		users = append(users[:i], users[i+1:]...)
+		c.JSON(http.StatusNoContent, "")
+	} else {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "用户不存在",
+		})
+	}
+}
+
+func updateUserName(c *gin.Context) {
+	id := c.Param("id")
+	i := -1
+	for index, u := range users {
+		if strings.EqualFold(id, strconv.Itoa(u.ID)) {
+			i = index
+			break
+		}
+	}
+	if i >= 0 {
+		users[i].Name = c.DefaultPostForm("name", users[i].Name)
+		c.JSON(http.StatusOK, users[i])
+	} else {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "用户不存在",
 		})
 	}
 }
