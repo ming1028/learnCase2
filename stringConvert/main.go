@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/spf13/cast"
 	"strconv"
 	"strings"
 	"unicode"
@@ -93,4 +94,12 @@ func main() {
 	fmt.Println(strings.Replace("hellollllll", "l", "a", 2))
 
 	fmt.Println(strings.Join([]string{"h", "a", "b"}, ""))
+
+	var strs strings.Builder
+	for i := 0; i < 10000; i++ {
+		strs.WriteString(cast.ToString(i))
+	}
+	fmt.Println(strs.String())
+	// RUNE，unicode是ASCII的超集，在GO中称为rune，是int32类型的别名
+	// 汉字占3个byte 字符串底层是byte序列
 }

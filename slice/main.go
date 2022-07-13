@@ -55,6 +55,10 @@ func main() {
 	sh.Cap = sh.Len
 	b1 := *(*[]byte)(unsafe.Pointer(sh)) // b1 和b内容一样，b1没有申请内存，跟s使用同一内存
 	fmt.Println(string(b1))              // b1不可修改，共用内存，string不可修改
+	var sa, sc []string
+	sb := []string{"ff", "aa"}
+	fmt.Println(len(sa), sa == nil)
+	fmt.Println(reflect.DeepEqual(sa, sb), reflect.DeepEqual(sa, sc))
 }
 
 func expanSlice(sli []string) {
@@ -62,4 +66,22 @@ func expanSlice(sli []string) {
 		sli = append(sli, "王五"+cast.ToString(i))
 	}
 	fmt.Println(sli)
+}
+
+func StringSliceEqualBCE(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+
+	if (a == nil) != (b == nil) {
+		return false
+	}
+
+	b = b[:len(a)]
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
 }
