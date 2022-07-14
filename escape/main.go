@@ -8,6 +8,9 @@ func main() {
 	m := map[int]*string{}
 	s := "飞雪无情"
 	m[0] = &s
+	e1 := escape()
+	e1()
+	e1()
 }
 
 // 指针作为函数返回值的时候，一定会发生逃逸
@@ -21,4 +24,12 @@ func newString2() string {
 	s := new(string)
 	*s = "赵钱孙李"
 	return *s
+}
+
+func escape() func() int {
+	a := 6
+	return func() int {
+		a += 1
+		return a
+	}
 }
