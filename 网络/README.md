@@ -95,3 +95,18 @@ Content-Type(数据格式：text/html;chatset=utf-8)、 Content-encoding(数据�
 * 无队头阻塞：可以在同一连接上并发传输多个stream，当某个stream丢包是，只会阻塞这个流，其他不收到影响
 * 更快的连接建立：握手过程只需要1RTT，确认双方的连接id。QUIC包含TLS协议
 * 连接迁移，通过连接id标记通信的两个断点
+
+***
+
+### TLS协议
+
+https是在http与tcp层之间加入了tls协议
+
+* 客户端发出Client Hello消息包含：TLS版本号、支持的密码套件列表、随机数
+* 服务端收到消息后，缺人TLS版本号是否支持，从密码套件列表中选择一个密码套件，生成随机数；
+  返回Server Hello消息，包含：确认的TLS版本号、服务器随机数、密码套件、Server Certificat
+  包含数字证书
+* 客户端验证证书，生成一个新的随机数，用服务器的rsa公钥加密该随机数，通过Change Cipher Key Exchange消息传给服务器
+  服务端收到消息后用RSA私钥解密，得到客户端的随机数，根据三个随机数生成会话密钥，发一个Change Cipher Spec
+  客户端将之前所有发送数据，使用会话密钥加密，让服务器验证加密通信是否可用
+* 服务端同样Change Cipher Spec，Encrypted Handshake Message 验证加密解密，握手正式完成 
