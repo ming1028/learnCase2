@@ -62,8 +62,8 @@ SYN:建立连接 FIN:关闭连接 ACK:响应 PSH:有数据传输 RST:连接重�
 
 #### 常见字段
 
-  Host、 Content-Length(返回数据的长度)、 Connection(使用Tcp持久连接，以便请求复用，Keep-Alive)、
-  Content-Type(数据格式：text/html;chatset=utf-8)、 Content-encoding(数据压缩方法)、
+Host、 Content-Length(返回数据的长度)、 Connection(使用Tcp持久连接，以便请求复用，Keep-Alive)、
+Content-Type(数据格式：text/html;chatset=utf-8)、 Content-encoding(数据压缩方法)、
 
 ***
 
@@ -72,3 +72,26 @@ SYN:建立连接 FIN:关闭连接 ACK:响应 PSH:有数据传输 RST:连接重�
 * GET方法获取指定的资源，是安全、幂等、可被缓存的（只读操作）
 * POST是新增或提交数据的操作，不安全，不是幂等的，不可缓存
 * HTTP传输的内容都是明文的，使用https数据会被加密传输
+
+#### HTTP/2、HTTP/1.1、HTTP/1.0、HTTP/3区别
+
+* http/1.1使用长连接方式、支持管道（pipeline）网络传输，管道问题：没有解决响应的对头阻塞，服务端
+  需要按顺序响应收到的请求
+* http/2会压缩头，多个请求会消除重复部分（HPACK）
+* http/2全面采用二进制格式：头信息帧和数据帧
+* http/2每个请求或响应的所有数据包称为数据流都有一个Stream ID,客户端
+  建立的stream必须是奇数号，服务器建立的stream必须是偶数号，可以指定stream的优先级
+* http/2可以在一个连接中并发多个请求或回应（多路复用）
+* http/2服务器推送
+* http/2问题：tcp对头阻塞问题，tcp层必须保证收到的字节数据是完整且连续的，当前一个字节
+  没有到达时，后收到的字节数据只能存放在内核缓冲区，只有等到这一个字节到达时，http/2应用层才能从
+  内核中拿到数据。
+* http/3将HTTP下层的TCP协议改成了UDP，增加QUIC协议实现类似TCP的可靠性传输。
+
+***
+
+##### QUIC协议特点
+
+* 无队头阻塞：可以在同一连接上并发传输多个stream，当某个stream丢包是，只会阻塞这个流，其他不收到影响
+* 更快的连接建立：握手过程只需要1RTT，确认双方的连接id。QUIC包含TLS协议
+* 连接迁移，通过连接id标记通信的两个断点
