@@ -59,6 +59,12 @@ func main() {
 	sb := []string{"ff", "aa"}
 	fmt.Println(len(sa), sa == nil)
 	fmt.Println(reflect.DeepEqual(sa, sb), reflect.DeepEqual(sa, sc))
+
+	// 测试题
+	var num1 []interface{}
+	num2 := []int{1, 2, 3}
+	num3 := append(num1, num2)
+	fmt.Println(len(num3), num3)
 }
 
 func expanSlice(sli []string) {
