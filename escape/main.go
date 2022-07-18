@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/davecgh/go-spew/spew"
+)
 
 // 逃逸分析
 func main() {
@@ -8,6 +11,7 @@ func main() {
 	m := map[int]*string{}
 	s := "飞雪无情"
 	m[0] = &s
+	spew.Dump(m)
 	e1 := escape()
 	e1()
 	e1()
