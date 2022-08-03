@@ -321,3 +321,21 @@ goroutine调度器和OS调度器是通过M结合起来，每个M都代表了一�
 for range // 通道关闭自动退出for range
 _, ok := <-ch // ok为false
 ```
+
+### 锁
+
+* 互斥锁：能够保证同一时间有且只有一个goroutine进入临界区，其他的goroutine则在等待锁，多个goroutine
+  等待同一个锁时，唤醒的策略是随机的
+
+```
+sync.Mutex // 互斥锁
+```
+
+* 读写互斥锁：读多写少场景，一个goroutine获取读锁之后，其他goroutine如果获取读锁会获得锁，获取写锁就会等待；
+  一个goroutine获取写锁，其他goroutine无论读锁写锁都会等待
+```
+rwLock sync.RWMutex
+rwLock.Lock // 写锁 rwLock.Unlock
+rwLock.RLock // 读锁
+rwLock.RUnlock //解读锁
+```
