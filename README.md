@@ -333,9 +333,43 @@ sync.Mutex // 互斥锁
 
 * 读写互斥锁：读多写少场景，一个goroutine获取读锁之后，其他goroutine如果获取读锁会获得锁，获取写锁就会等待；
   一个goroutine获取写锁，其他goroutine无论读锁写锁都会等待
+
 ```
 rwLock sync.RWMutex
 rwLock.Lock // 写锁 rwLock.Unlock
 rwLock.RLock // 读锁
 rwLock.RUnlock //解读锁
 ```
+
+### Kafka
+
+* Topic: 用于区分不同类别信息的类别名称，由producer指定
+* producer：将消息发布到Kafka特定的topic的对象
+* Consumers: 订阅并处理特定的Topic中的消息的对象
+* Broker(服务集群)：已发布的消息保存在一组服务器中，集群中的每一个服务器都是一个代理（broker）
+  消费者可以订阅一个或者多个Topic，并从Broker拉数据，从而消费这些已发布的消息。
+* Partition: Topic物理上的分组，一个topic可以分为多个partition，每个partition是一个有序的队列，
+  partition中的每条消息都会被分配一个有序的id
+
+#### 工作流程
+
+* ⽣产者从Kafka集群获取分区leader信息
+* ⽣产者将消息发送给leader
+* leader将消息写入本地磁盘
+* follower从leader拉取消息数据
+* follower将消息写入本地磁盘后向leader发送ACK
+* leader收到所有的follower的ACK之后向生产者发送ACK
+
+#### 选择partition的原则
+
+* partition在写入的时候可以指定需要写入的partition，如果有指定，则写入对应的partition。
+* 如果没有指定partition，但是设置了数据的key，则会根据key的值hash出一个partition。
+* 如果既没指定partition，又没有设置key，则会采用轮询⽅式，即每次取一小段时间的数据写入某
+  个partition，下一小段的时间写入下一个partition
+
+#### ACK应答机制
+
+* 代表producer往集群发送数据不需要等到集群的返回，不确保消息发送成功。安全性最低但是效 率最高。
+* 代表producer往集群发送数据只要leader应答就可以发送下一条，只确保leader发送成功。
+* 代表producer往集群发送数据需要所有的follower都完成从leader的同步才会发送下一条，
+  确保 leader发送成功和所有的副本都完成备份。安全性最⾼高，但是效率最低。
