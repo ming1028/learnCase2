@@ -373,3 +373,11 @@ rwLock.RUnlock //解读锁
 * 代表producer往集群发送数据只要leader应答就可以发送下一条，只确保leader发送成功。
 * 代表producer往集群发送数据需要所有的follower都完成从leader的同步才会发送下一条，
   确保 leader发送成功和所有的副本都完成备份。安全性最⾼高，但是效率最低。
+
+***
+
+### 依赖管理
+
+* go get -u升级到最新的次要版本或者修订版本
+* go get -u=patch将会升级到最新的修订版本
+* go get package@version升级到指定版本
