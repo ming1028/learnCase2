@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/davecgh/go-spew/spew"
 )
 
 // 逃逸分析
@@ -11,10 +10,20 @@ func main() {
 	m := map[int]*string{}
 	s := "飞雪无情"
 	m[0] = &s
-	spew.Dump(m)
+	//spew.Dump(m)
 	e1 := escape()
 	e1()
 	e1()
+	data := []interface{}{100, 200}
+	data[0] = 10
+	d := []int{1, 2, 3}
+	d[0] = 11
+	dataM := make(map[string]interface{})
+	dataM["key"] = 20
+	dataM2 := make(map[string]int)
+	dataM2["key"] = 20
+	a := "111"
+	foo(&a)
 }
 
 // 指针作为函数返回值的时候，一定会发生逃逸
@@ -36,4 +45,8 @@ func escape() func() int {
 		a += 1
 		return a
 	}
+}
+
+func foo(a *string) {
+	return
 }

@@ -99,7 +99,14 @@ go build -gcflags "-m -l" -m打印逃逸分析，-l禁止内联优化
 
 * 指针作为函数返回值的时候，一定会发生逃逸
 * 被已经逃逸的指针引用的变量也会发生逃逸
-* 被map、slice和chan这三种类型引用的指针一定会发生逃逸
+* 被map、slice和chan这三种类型**引用的指针**一定会发生逃逸
+* []interface{}数据类型，通过索引（[idx]）赋值必定出现逃逸
+* map[string]interface{}通过赋值必定出现逃逸
+* map[interface{}]interface{}通过赋值会导致key和value的赋值出现逃逸
+* map[string][]string数据类型，赋值会发生[]string发生逃逸。
+* func(*int)函数类型，进行函数赋值，会使传递的形参出现逃逸现象。
+* func([]string): 函数类型，进行[]string{"value"}赋值，会使传递的参数出现逃逸现象。
+* chan []string数据类型，想当前channel中传输[]string{"value"}会发生逃逸现象。
 * 逃逸分析是在编译器完成的
 
 #### 逃逸情况
