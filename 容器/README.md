@@ -64,3 +64,27 @@ COPY指令只支持基本的文件和文件夹拷贝功能，ADD则支持更多�
 - 优先级控制：不同组可以有不同的资源使用优先级。
 - 审计：计算控制组的资源使用情况。
 - 控制：控制进程的挂起或恢复。
+
+### Docker数据卷
+
+- 创建数据卷方式
+
+```
+docker volume create volume名字 // 为local模式，仅提供本机的容器访问
+docker run -v 路径 // 指定容器内需要被持久化的路径，会自动创建卷，并且绑定到容器中
+docker volume ls // 查看主机上的卷
+docker volume inspect 卷名 // 查看数据卷详情
+docker run --mount source=卷名,target=容器内路径 // --mount 指定卷与目录绑定
+docker volume rm 卷名 // 删除数据卷
+docker run -it --volumes-from 已启动容器名称 // 启动新的容器挂在已经存在的容器的卷
+```
+
+- 主机与容器之间数据共享
+
+```
+docker run -v 主机目录:容器目录
+```
+
+Docker 卷的实现原理是在主机的 /var/lib/docker/volumes 目录下，
+根据卷的名称创建相应的目录，然后在每个卷的目录下创建 _data 目录，在容器启动时如果使用 --mount 参数，
+Docker 会把主机上的目录直接映射到容器的指定目录下，实现数据持久化。
