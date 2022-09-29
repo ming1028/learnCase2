@@ -88,3 +88,9 @@ docker run -v 主机目录:容器目录
 Docker 卷的实现原理是在主机的 /var/lib/docker/volumes 目录下，
 根据卷的名称创建相应的目录，然后在每个卷的目录下创建 _data 目录，在容器启动时如果使用 --mount 参数，
 Docker 会把主机上的目录直接映射到容器的指定目录下，实现数据持久化。
+
+### 常用命令
+
+docker images // 列出所有的镜像 -a(包含历史)
+docker rmi <image ID> // 删除一个或多个image
+docker run -i 交互模式 -d 后台运行容器 -p端口映射 主机:容器 -t 分配一个伪输入终端 -v绑定数据卷
