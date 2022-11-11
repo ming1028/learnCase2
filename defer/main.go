@@ -22,6 +22,10 @@ func main() {
 	// 11 1 3 4
 	fmt.Println("main return1", test1())
 	fmt.Println("main return2", test2())
+
+	for i := 0; i < 4; i++ {
+		defer fmt.Println(i)
+	}
 }
 
 func test1() int {
