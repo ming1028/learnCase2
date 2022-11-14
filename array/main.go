@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"sync"
+)
+
 // slice map不能比较
 // go不存在隐式的类型转换，类型不同不能比较
 // 数组的长度是类型的一部分，长度不同，无法比较
@@ -7,4 +12,12 @@ package main
 // slice、map类型不能比较，只能与nil做比较
 func main() {
 	// fmt.Println(09)
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		fmt.Println("1")
+		wg.Done()
+		wg.Add(1)
+	}()
+	wg.Wait()
 }

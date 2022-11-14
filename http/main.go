@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -24,11 +23,11 @@ func handleUsers(
 	switch r.Method {
 	case "GET":
 		w.WriteHeader(http.StatusOK)
-		/*fmt.Fprintln(w, "ID:1, Name:张三")
+		fmt.Fprintln(w, "ID:1, Name:张三")
 		fmt.Fprintln(w, "ID:2, Name:李四")
-		fmt.Fprintln(w, "ID:3, Name:王五")*/
-		uJson, _ := json.Marshal(users)
-		w.Write(uJson)
+		fmt.Fprintln(w, "ID:3, Name:王五")
+		/*uJson, _ := json.Marshal(users)
+		w.Write(uJson)*/
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		/*fmt.Fprintln(w, "not found")*/
