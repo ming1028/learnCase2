@@ -438,3 +438,16 @@ rwLock.RUnlock //解读锁
 * 算术运算符 *、/ 和 % 的优先级相同，从左向右结合
 * 八进制数以 0 开头，十六进制数以 0x 开头
 * ^ 作为二元运算符时表示按位异或：对应位，相同为 0，相异为 1
+* 同类型的值是不能相互赋值的，即使底层类型一样,也不能赋值；
+  对于底层类型相同的变量可以相互赋值还有一个重要的条件，即至少有一个不是有名类型（named type）
+* Named Type 有两类
+    - 内置类型，比如 int, int64, float, string, bool 等
+    - 使用关键字 type 声明的类型；
+* Unnamed Type 是基于已有的 Named Type 组合一起的类型
+    - 例如：struct{}、[]string、interface{}、map[string]bool 等
+* Unnamed Type 不能作为方法的接收者
+* init() 函数不能被其他函数调用，包括 main() 函数
+* 当使用 type 声明一个新类型，它不会继承原有类型的方法集
+* ret is shadowed during return，返回值被重新定义，需要显示返回
+* true 是预定义标识符可以用作变量名，但是不建议这么做
+* 遍历 map 是无序的

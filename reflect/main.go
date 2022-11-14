@@ -29,7 +29,7 @@ func main() {
 	ppv.Elem().Field(1).SetInt(33)
 	fmt.Println(p)
 
-	fmt.Println(ppv.Kind())
+	fmt.Println(ppv.Kind() == reflect.Ptr)
 	pv := reflect.ValueOf(p)
 	fmt.Println(pv.Kind())
 
