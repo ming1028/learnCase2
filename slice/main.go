@@ -50,6 +50,7 @@ func main() {
 	b = []byte(s)
 	s4 := *(*string)(unsafe.Pointer(&b))
 	fmt.Println(s4)
+	fmt.Printf("%T, %v\n", s4, s4)
 
 	sh := (*reflect.SliceHeader)(unsafe.Pointer(&s))
 	sh.Cap = sh.Len
@@ -68,9 +69,11 @@ func main() {
 }
 
 func expanSlice(sli []string) {
+	fmt.Println("扩容：", len(sli), cap(sli))
 	for i := 0; i < 1; i++ {
 		sli = append(sli, "王五"+cast.ToString(i))
 	}
+	// append 然后新slice
 	fmt.Println(sli)
 }
 
