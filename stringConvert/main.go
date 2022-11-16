@@ -18,10 +18,10 @@ func main() {
 
 	// 数字类型之间可以通过强制转换的方式
 	stringFloat := "32.33"
-	strConFloat, err := strconv.ParseFloat(stringFloat, 32)
+	strConFloat, err := strconv.ParseFloat(stringFloat, 32) // 转换成float32
 	fmt.Printf("%T, %v\n", strConFloat, err)
 
-	strConFloat64, err := strconv.ParseFloat(stringFloat, 64)
+	strConFloat64, err := strconv.ParseFloat(stringFloat, 64) // 转换成float32
 	fmt.Printf("%T, %v\n", strConFloat64, err)
 
 	boolStr := "true"
@@ -47,11 +47,11 @@ func main() {
 	fmt.Println("出现次数：", strings.Count(s1, "r"), strings.Count(s1, ""))
 
 	fmt.Println("字符首次出现的位置：", strings.IndexByte(s1, 'a'), strings.IndexByte(s1, 'h'))
-	fmt.Println("字符最后出现的位置：", strings.LastIndex(s1, "ss"), strings.LastIndex(s2, "ll"),
+	fmt.Println("字符串最后出现的位置：", strings.LastIndex(s1, "ss"), strings.LastIndex(s2, "ll"),
 		strings.LastIndexByte(s1, 'a'), strings.LastIndexByte(s1, 'o'),
 	)
 
-	// 字符串切割
+	// 字符串切割 strings.Fields 空格切割字符串
 	fmt.Println("字符串切割", strings.Fields(s1), strings.Fields("hello world 123 2 3   f"))
 	f := func(r rune) bool {
 		fmt.Println(string(r))

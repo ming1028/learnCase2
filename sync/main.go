@@ -27,7 +27,7 @@ func main() {
 }
 
 func add(i int) {
-	/*mutex.Lock()
-	defer mutex.Unlock()*/
+	mutex.Lock()
+	defer mutex.Unlock()
 	sum += i
 }
