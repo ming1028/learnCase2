@@ -501,3 +501,5 @@ Redis使用一个哈希表来保存所有的键值对，哈希桶中的元素保
     - 增加多级索引，通过索引位置的跳转，实现数据的快速定位。
 * 整数数组
 * 常量 const name = "" 只允许布尔型、字符串、数字类型
+* PHP类型不确定，gin默认使用go内置的 encoding/json库，对接php可以使用jsoniter类代替，
+  只需要在编译的时候加上标志即可：”go build -tags=jsoniter .”
