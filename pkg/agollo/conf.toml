@@ -1,0 +1,4 @@
+name = "config"
+
+[redis]
+    addr = "{{key "redis_addr"}}"
