@@ -1,4 +1,3 @@
-FROM busybox
+FROM nginx
 
-COPY README.md /tmp/readme.md
-RUN mkdir /tmp/testdir
+RUN echo '<h1>Hello, world Docker</h1>' > /usr/share/nginx/html/index.html
