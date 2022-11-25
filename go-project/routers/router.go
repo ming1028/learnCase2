@@ -1,10 +1,10 @@
 package routers
 
 import (
-	_ "github.com/EDDYCJY/go-gin-example/docs"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	_ "go-gin/docs"
 	"go-gin/middleware/jwt"
 	"go-gin/pkg/setting"
 	"go-gin/routers/api"
