@@ -1,4 +1,4 @@
-module learn2
+module github.com/learnCase2
 
 go 1.18
 
@@ -6,6 +6,7 @@ require (
 	github.com/apolloconfig/agollo/v4 v4.2.1
 	github.com/gin-gonic/gin v1.8.1
 	github.com/json-iterator/go v1.1.12
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.14.0
