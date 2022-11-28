@@ -40,7 +40,12 @@ func init() {
 		dbName,
 	))
 	if err != nil {
-		log.Println(err)
+		log.Println(fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
+			user,
+			password,
+			host,
+			dbName,
+		), err)
 	}
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return tablePrefix + defaultTableName
