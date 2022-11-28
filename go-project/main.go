@@ -10,6 +10,9 @@ import (
 )
 
 func main() {
+	// 配置初始化
+	setting.Setup()
+
 	endless.DefaultReadTimeOut = setting.ReadTimeout
 	endless.DefaultWriteTimeOut = setting.WriteTimeout
 	endless.DefaultMaxHeaderBytes = 1 << 20
