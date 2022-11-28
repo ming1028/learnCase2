@@ -8,3 +8,9 @@ go get -u github.com/swaggo/gin-swagger@v1.2.0
 go get -u github.com/swaggo/files
 go get -u github.com/alecthomas/template
 ```
+
+### cron
+
+```
+go get -u github.com/robfig/cron
+```
