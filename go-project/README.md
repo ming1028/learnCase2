@@ -24,5 +24,6 @@ github.com/gomodule/redigo/redis
 ### excel导入导出
 
 ```
-go get -u github.com/tealeg/xlsx
+go get -u github.com/tealeg/xlsx // 生成
+github.com/360EntSecGroup-Skylar/excelize // 导入
 ```

@@ -1,8 +1,12 @@
 package service
 
 import (
+	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/tealeg/xlsx"
+	"go-gin/models"
 	"go-gin/pkg/export"
+	file2 "go-gin/pkg/file"
+	"io"
 	"strconv"
 	"time"
 )
@@ -26,10 +30,35 @@ func Export() (string, error) {
 	fileName := "tags-" + time + ".xlsx"
 
 	fullPath := export.GetExcelFullPath() + fileName
+
+	err = file2.IsNotExistMkDir(export.GetExcelFullPath())
+	if err != nil {
+		return "", err
+	}
+
 	err = file.Save(fullPath)
 	if err != nil {
 		return "", err
 	}
 
 	return fileName, nil
+}
+
+func Import(r io.Reader) error {
+	xlsx, err := excelize.OpenReader(r)
+	if err != nil {
+		return err
+	}
+	rows := xlsx.GetRows("标签信息")
+	for idxRow, row := range rows {
+		if idxRow < 1 {
+			continue
+		}
+		var data []string
+		for _, cell := range row {
+			data = append(data, cell)
+		}
+		models.AddTag(data[1], 1, data[2])
+	}
+	return nil
 }

@@ -6,6 +6,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	_ "go-gin/docs"
 	"go-gin/middleware/jwt"
+	"go-gin/pkg/export"
 	"go-gin/pkg/setting"
 	"go-gin/pkg/upload"
 	"go-gin/routers/api"
@@ -18,6 +19,8 @@ func InitRouter() *gin.Engine {
 
 	// http.FileServer
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+
+	r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
 
 	r.Use(gin.Logger())
 
