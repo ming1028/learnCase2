@@ -2,12 +2,14 @@ package v1
 
 import (
 	"github.com/astaxie/beego/validation"
+	"github.com/boombuler/barcode/qr"
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
 	"go-gin/models"
 	"go-gin/pkg/app"
 	"go-gin/pkg/e"
 	"go-gin/pkg/logging"
+	"go-gin/pkg/qrcode"
 	"go-gin/pkg/setting"
 	"go-gin/pkg/util"
 	"net/http"
@@ -227,4 +229,21 @@ func DeleteArticle(c *gin.Context) {
 		"msg":  e.GetMsg(code),
 		"data": make(map[string]string),
 	})
+}
+
+const (
+	QRCODE_URL = "gin-project"
+)
+
+func GenerateArticlePoster(c *gin.Context) {
+	appG := app.Gin{c}
+	qrc := qrcode.NewQrCode(QRCODE_URL, 300, 300, qr.M, qr.Auto)
+	path := qrcode.GetQrCodeFullPath()
+	_, _, err := qrc.Encode(path)
+	if err != nil {
+		appG.Response(http.StatusOK, e.ERROR, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, nil)
 }

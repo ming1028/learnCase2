@@ -7,6 +7,7 @@ import (
 	_ "go-gin/docs"
 	"go-gin/middleware/jwt"
 	"go-gin/pkg/export"
+	"go-gin/pkg/qrcode"
 	"go-gin/pkg/setting"
 	"go-gin/pkg/upload"
 	"go-gin/routers/api"
@@ -21,7 +22,7 @@ func InitRouter() *gin.Engine {
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 
 	r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
-
+	r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 	r.Use(gin.Logger())
 
 	r.Use(gin.Recovery())
@@ -55,9 +56,10 @@ func InitRouter() *gin.Engine {
 		apiv1.PUT("/articles/:id", v1.EditArticle)
 		//删除指定文章
 		apiv1.DELETE("/articles/:id", v1.DeleteArticle)
-
-		//导出标签
-		r.GET("/tags/export", v1.ExportTag)
+		apiv1.POST("/articles/poster/generate", v1.GenerateArticlePoster)
 	}
+
+	//导出标签
+	r.GET("/tags/export", v1.ExportTag)
 	return r
 }
