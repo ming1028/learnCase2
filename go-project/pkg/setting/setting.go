@@ -44,6 +44,16 @@ type Database struct {
 
 var DatabaseSetting = &Database{}
 
+type Redis struct {
+	Password    string
+	Host        string
+	MaxIdle     int32
+	MaxActive   int32
+	IdleTimeout int32
+}
+
+var RedisSetting = &Redis{}
+
 var (
 	Cfg     *ini.File
 	RunMode string
@@ -116,5 +126,10 @@ func Setup() {
 	err = Cfg.Section("database").MapTo(DatabaseSetting)
 	if err != nil {
 		log.Fatalf("Cfg.MapTo DatabaseSetting err: %v", err)
+	}
+
+	err = Cfg.Section("redis").MapTo(RedisSetting)
+	if err != nil {
+		log.Fatalf("Cfg.MapTo RedisSetting err: %v", err)
 	}
 }

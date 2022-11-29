@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
 	"go-gin/models"
+	"go-gin/pkg/app"
 	"go-gin/pkg/e"
 	"go-gin/pkg/logging"
 	"go-gin/pkg/setting"
@@ -14,6 +15,7 @@ import (
 
 //获取单个文章
 func GetArticle(c *gin.Context) {
+	appG := app.Gin{c}
 	id := com.StrTo(c.Param("id")).MustInt()
 
 	valid := validation.Validation{}
@@ -21,6 +23,11 @@ func GetArticle(c *gin.Context) {
 
 	code := e.INVALID_PARAMS
 	var data interface{}
+	if valid.HasErrors() {
+		app.MarkErrors(valid.Errors)
+		appG.Response(http.StatusOK, e.INVALID_PARAMS, nil)
+		return
+	}
 	if !valid.HasErrors() {
 		if models.ExistArticleByID(id) {
 			data = models.GetArticle(id)

@@ -14,3 +14,9 @@ go get -u github.com/alecthomas/template
 ```
 go get -u github.com/robfig/cron
 ```
+
+### redis
+
+```
+github.com/gomodule/redigo/redis
+```
