@@ -5,9 +5,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
 	"go-gin/models"
+	"go-gin/pkg/app"
 	"go-gin/pkg/e"
+	"go-gin/pkg/export"
 	"go-gin/pkg/setting"
 	"go-gin/pkg/util"
+	"go-gin/service"
 	"net/http"
 )
 
@@ -153,5 +156,18 @@ func DeleteTag(c *gin.Context) {
 		"code": code,
 		"msg":  e.GetMsg(code),
 		"data": make(map[string]string),
+	})
+}
+
+func ExportTag(c *gin.Context) {
+	appG := app.Gin{C: c}
+	filename, err := service.Export()
+	if err != nil {
+		appG.Response(http.StatusOK, e.ERROR_EXPORT_TAG_FAIL, nil)
+		return
+	}
+	appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
+		"export_url":      export.GetExcelFullUrl(filename),
+		"export_save_url": export.GetExcelPath() + filename,
 	})
 }

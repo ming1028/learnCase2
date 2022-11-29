@@ -20,3 +20,9 @@ go get -u github.com/robfig/cron
 ```
 github.com/gomodule/redigo/redis
 ```
+
+### excel导入导出
+
+```
+go get -u github.com/tealeg/xlsx
+```

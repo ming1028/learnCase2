@@ -1,0 +1,15 @@
+package export
+
+import "go-gin/pkg/setting"
+
+func GetExcelFullUrl(name string) string {
+	return setting.AppSetting.ImagePrefixUrl + "/" + GetExcelPath()
+}
+
+func GetExcelPath() string {
+	return setting.AppSetting.ExportSavePath
+}
+
+func GetExcelFullPath() string {
+	return setting.AppSetting.RuntimeRootPath + GetExcelPath()
+}
