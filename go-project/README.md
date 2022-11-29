@@ -27,3 +27,9 @@ github.com/gomodule/redigo/redis
 go get -u github.com/tealeg/xlsx // 生成
 github.com/360EntSecGroup-Skylar/excelize // 导入
 ```
+
+### 二维码
+
+```
+github.com:boombuler/barcode
+```
