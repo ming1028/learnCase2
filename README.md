@@ -470,6 +470,14 @@ rwLock.RUnlock //解读锁
     - Attempting to launch a nil function as a goroutine // 将 nil 函数作为 goroutine 启动
     - All goroutines are asleep - deadlock // 死锁
     - Thread limit exhaustion // 线程耗尽
+* 切片扩容
+    - 若在函数中对该切片进行扩容且扩容后的切片大小不超过其原始容量，
+      此时修改切片中已有的元素，则修改会同步到实参切片中，而扩容不会同步到实参切片中
+    - 若在函数中对该切片进行扩容且扩容后的切片大小超过其原始容量，
+      则修改不会同步到实参切片中，同时扩容不会同步到实参切片中
+    - 若扩容后的元素数量超过两倍原始容量，则直接将扩容后元素数量赋值给新容量，否则执行如下
+    - 若原容量小于 threshold（256），则将原始容量的两倍赋值给新容量，否则执行如下
+    - 在原始容量基础上，每次增加 (原始容量 + threshold * 3)/ 4，直到其不小于扩容后的元素数量
 
 ### Redis
 
