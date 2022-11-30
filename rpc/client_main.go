@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"learn2/rpc/server"
+	"github.com/learnCase2/rpc/server"
 	"log"
 	"net/rpc"
 )

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/learnCase2/rpc/server"
 	"io"
-	"learn2/rpc/server"
 	"log"
 	"net"
 	"net/http"
