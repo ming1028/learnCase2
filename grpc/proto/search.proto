@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package proto;
+option go_package = "grpc/proto";
+
+service SearchService {
+  rpc Search(SearchReq) returns(SearchResp) {}
+}
+
+message SearchReq {
+  string request = 1;
+}
+
+message SearchResp {
+  string response = 1;
+}
