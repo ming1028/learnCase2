@@ -461,6 +461,15 @@ rwLock.RUnlock //解读锁
     - rune 类型，代表一个 UTF-8 字符，当需要处理中文、日文或者其他复合字符时，
       则需要用到 rune 类型。rune 类型等价于 int32 类型
     - 一个汉字三个字节，计算长度utf8.RuneCountInString或者转换len([]rune())
+* 当异常是通过 runtime.panic() 抛出时，能够被 recover 方法捕获
+* 当异常是通过 runtime.throw() 或者 runtime.fatal() 抛出时，不能够被 recover 方法捕获
+* 不可恢复的异常
+    - Out of memory // 内存溢出
+    - Concurrent map writes // 并发写，共享资源遭到破坏
+    - Stack memory exhaustion // 栈内存耗尽
+    - Attempting to launch a nil function as a goroutine // 将 nil 函数作为 goroutine 启动
+    - All goroutines are asleep - deadlock // 死锁
+    - Thread limit exhaustion // 线程耗尽
 
 ### Redis
 
