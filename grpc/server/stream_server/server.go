@@ -1,11 +1,24 @@
 package main
 
-import "github.com/learnCase2/grpc/proto"
+import (
+	"github.com/learnCase2/grpc/proto"
+	"github.com/spf13/cast"
+	"google.golang.org/grpc"
+	"log"
+	"net"
+)
 
 const PORT = 9002
 
 func main() {
+	server := grpc.NewServer()
+	proto.RegisterStreamServiceServer(server, &StreamService{})
 
+	listen, err := net.Listen("tcp", ":"+cast.ToString(PORT))
+	if err != nil {
+		log.Fatalf("net.Listen err:%v", err)
+	}
+	server.Serve(listen)
 }
 
 type StreamService struct {

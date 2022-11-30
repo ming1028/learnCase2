@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"github.com/learnCase2/grpc/proto"
 	"github.com/spf13/cast"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"io"
 	"log"
 )
 
@@ -55,6 +57,21 @@ func printLists(
 	client proto.StreamServiceClient,
 	req *proto.StreamReq,
 ) error {
+	stream, err := client.List(context.Background(), req)
+	if err != nil {
+		return err
+	}
+
+	for {
+		resp, err := stream.Recv()
+		if err != nil {
+			break
+		}
+		if err == io.EOF {
+			break
+		}
+		log.Printf("resp: pj.name:%s, pt.Value: %d\n", resp.GetPt().GetName(), resp.GetPt().GetValue())
+	}
 	return nil
 }
 
