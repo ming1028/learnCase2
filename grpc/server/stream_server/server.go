@@ -4,6 +4,7 @@ import (
 	"github.com/learnCase2/grpc/proto"
 	"github.com/spf13/cast"
 	"google.golang.org/grpc"
+	"io"
 	"log"
 	"net"
 )
@@ -46,6 +47,23 @@ func (s *StreamService) List(
 func (s *StreamService) Record(
 	stream proto.StreamService_RecordServer,
 ) error {
+	for {
+		recv, err := stream.Recv()
+		if err == io.EOF {
+			return stream.SendAndClose(
+				&proto.StreamResp{
+					Pt: &proto.StreamPoint{
+						Name:  "gRPC Stream Server:Record",
+						Value: 1,
+					},
+				},
+			)
+		}
+		if err != nil {
+			return err
+		}
+		log.Printf("stream Recv pt.name: %s, pt.Value: %d\n", recv.GetPt().GetName(), recv.GetPt().GetValue())
+	}
 	return nil
 }
 

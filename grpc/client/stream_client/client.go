@@ -79,6 +79,21 @@ func printRecord(
 	client proto.StreamServiceClient,
 	req *proto.StreamReq,
 ) error {
+	stream, err := client.Record(context.Background())
+	if err != nil {
+		return err
+	}
+	for n := 0; n < 6; n++ {
+		err := stream.Send(req)
+		if err != nil {
+			return err
+		}
+	}
+	resp, err := stream.CloseAndRecv()
+	if err != nil {
+		return err
+	}
+	log.Printf("stream Recv pt.name: %s, pt.Value: %d\n", resp.GetPt().GetName(), resp.GetPt().GetValue())
 	return nil
 }
 
