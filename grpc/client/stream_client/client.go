@@ -13,7 +13,9 @@ import (
 const PORT = 9002
 
 func main() {
-	conn, err := grpc.Dial(":"+cast.ToString(PORT), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial(":"+cast.ToString(PORT), grpc.WithTransportCredentials(
+		insecure.NewCredentials(),
+	))
 	if err != nil {
 		log.Fatalf("grpc.Dial err:%v", err)
 	}

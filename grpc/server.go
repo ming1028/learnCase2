@@ -5,6 +5,7 @@ import (
 	"github.com/learnCase2/grpc/proto"
 	"github.com/spf13/cast"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"log"
 	"net"
 )
@@ -28,7 +29,15 @@ func (s *SearchService) Search(
 const PORT = 9001
 
 func main() {
-	server := grpc.NewServer()
+	cred, err := credentials.NewServerTLSFromFile(
+		"./grpc/conf/server.pem",
+		"./grpc/conf/server.key",
+	)
+	if err != nil {
+		log.Fatalf("credentials.NewServerTLSFromFile err:%v", err)
+	}
+
+	server := grpc.NewServer(grpc.Creds(cred))
 	proto.RegisterSearchServiceServer(server, &SearchService{})
 
 	lis, err := net.Listen("tcp", ":"+cast.ToString(PORT))
