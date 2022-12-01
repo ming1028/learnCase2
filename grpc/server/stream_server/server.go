@@ -1,18 +1,28 @@
 package main
 
 import (
+	"context"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/learnCase2/grpc/proto"
 	"github.com/spf13/cast"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"io"
 	"log"
 	"net"
+	"runtime/debug"
 )
 
 const PORT = 9002
 
 func main() {
-	server := grpc.NewServer()
+	opts := []grpc.ServerOption{
+		grpc_middleware.WithStreamServerChain(
+			LoggingServerInterceptor(),
+		),
+	}
+	server := grpc.NewServer(opts...)
 	proto.RegisterStreamServiceServer(server, &StreamService{})
 
 	listen, err := net.Listen("tcp", ":"+cast.ToString(PORT))
@@ -98,4 +108,47 @@ func (s *StreamService) Route(
 		)
 	}
 	return nil
+}
+
+func LoggingInterceptor(
+	ctx context.Context,
+	req interface{},
+	info *grpc.UnaryServerInfo,
+	handler grpc.UnaryHandler,
+) (
+	interface{},
+	error,
+) {
+	log.Printf("gRPc method: %s, %v", info.FullMethod, req)
+	resp, err := handler(ctx, req)
+	log.Printf("gRPc method: %s, %v", info.FullMethod, req)
+	return resp, err
+}
+
+func RecoveryInterceptor(
+	ctx context.Context,
+	req interface{},
+	info *grpc.UnaryServerInfo,
+	handler grpc.UnaryHandler,
+) (
+	resp interface{},
+	err error,
+) {
+	defer func() {
+		if e := recover(); e != nil {
+			debug.PrintStack()
+			err = status.Errorf(codes.Internal, "Panic err: %v")
+		}
+	}()
+	return handler(ctx, req)
+}
+
+func LoggingServerInterceptor() grpc.StreamServerInterceptor {
+	return func(
+		srv interface{}, ss grpc.ServerStream,
+		info *grpc.StreamServerInfo, handler grpc.StreamHandler,
+	) error {
+		log.Printf("gRPc method: %s, %v", info.FullMethod, ss)
+		return handler(srv, ss)
+	}
 }
