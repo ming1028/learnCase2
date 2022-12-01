@@ -122,5 +122,6 @@ func printRoute(
 			resp.GetPt().GetValue(),
 		)
 	}
+	stream.CloseSend()
 	return nil
 }
