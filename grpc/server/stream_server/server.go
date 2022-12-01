@@ -70,5 +70,32 @@ func (s *StreamService) Record(
 func (s *StreamService) Route(
 	stream proto.StreamService_RouteServer,
 ) error {
+	n := 0
+	for {
+		err := stream.Send(&proto.StreamResp{
+			Pt: &proto.StreamPoint{
+				Name:  "gRPC stream Client: Route",
+				Value: int32(n),
+			},
+		})
+		if err != nil {
+			return err
+		}
+
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+
+		if err != nil {
+			return err
+		}
+		n++
+
+		log.Printf("steam Recn pt.Name:%s, pt.Value:%d",
+			req.GetPt().GetName(),
+			req.GetPt().GetValue(),
+		)
+	}
 	return nil
 }

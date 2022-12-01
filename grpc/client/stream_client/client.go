@@ -101,5 +101,26 @@ func printRoute(
 	client proto.StreamServiceClient,
 	req *proto.StreamReq,
 ) error {
+	stream, err := client.Route(context.Background())
+	if err != nil {
+		return err
+	}
+	for n := 0; n <= 6; n++ {
+		err := stream.Send(req)
+		if err != nil {
+			return err
+		}
+		resp, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		log.Printf("resp Recv pt.Name:%s, pt.Value:%d",
+			resp.GetPt().GetName(),
+			resp.GetPt().GetValue(),
+		)
+	}
 	return nil
 }
