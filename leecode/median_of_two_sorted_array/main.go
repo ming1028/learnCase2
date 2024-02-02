@@ -10,6 +10,7 @@ func main() {
 	fmt.Println(findMedianSortedArrays1([]int{1, 3, 5}, []int{2, 4, 6}))
 }
 
+// merge 从小到大排序，两个切片诸位比较，小的数值添加到结果切片中
 func merge(nums1, nums2 []int) []int {
 	l1, l2 := len(nums1), len(nums2)
 	i, j := 0, 0

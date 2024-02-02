@@ -28,6 +28,7 @@ func main() {
 	printString(si) // si interface
 	// sip := &si // type *fmt.Stringer is pointer to interface, not interface
 	// printString(sip) // 形参不一致
+	// *interface{} 指向接口的指针
 	// 指向具体类型的指针可以实现一个接口，但是指向接口的指针永远不可能实现该接口
 
 	fmt.Printf("内存地址为%p\n", &p)

@@ -20,6 +20,7 @@ func main() {
 	pt := reflect.TypeOf(p)
 	for i := 0; i < pt.NumField(); i++ {
 		sf := pt.Field(i)
+		fmt.Println(sf.IsExported())
 		fmt.Printf("字段%s, json tag为：%s\n", sf.Name, sf.Tag.Get("json"))
 	}
 

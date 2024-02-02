@@ -13,8 +13,10 @@ func cal(str string, a, b int) int {
 func main() {
 	a := 1
 	b := 2
+	// cal("11", 1, 3)
 	defer cal("11", a, cal("22", a, b))
 	a = 3
+	// cal("33", 3, 5)
 	defer cal("33", a, cal("44", a, b))
 	// 22 1 2 3
 	// 44 3 2 5
@@ -34,7 +36,7 @@ func test1() int {
 		i += 1
 		fmt.Println("defer test1")
 	}()
-	return i //创建一个临时变量保存返回值
+	return i // 创建一个临时变量保存返回值
 }
 
 func test2() (i int) {

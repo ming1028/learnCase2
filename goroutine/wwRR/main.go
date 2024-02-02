@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"runtime"
 	"sync"
+	"time"
 )
 
 func main() {
@@ -37,5 +38,5 @@ func main() {
 		fmt.Println(r3, r4)
 		wg.Done()
 	}()
-	wg.Done()
+	time.Sleep(time.Hour)
 }

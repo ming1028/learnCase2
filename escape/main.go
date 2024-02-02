@@ -6,11 +6,12 @@ import (
 
 // 逃逸分析
 func main() {
-	fmt.Println("往往") // 被已经逃逸的指针引用的变量也会发生逃逸
+	fmt.Println("往往") // 对传入变量的类型未知，统一分配到堆上面
+	// 被已经逃逸的指针引用的变量也会发生逃逸
 	m := map[int]*string{}
 	s := "飞雪无情"
 	m[0] = &s // map/slice/chan引用的指针发生逃逸
-	//spew.Dump(m)
+	// spew.Dump(m)
 	e1 := escape()
 	e1()
 	e1()

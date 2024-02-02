@@ -17,11 +17,11 @@ func main() {
 	p1Json, _ := json.Marshal(p1)
 	fmt.Println(string(p1Json))
 	p2 := new(Person)
-	/*err := jsoniter.ConfigCompatibleWithStandardLibrary.Unmarshal(p1Json, p2)
+	err := jsoniter.ConfigCompatibleWithStandardLibrary.Unmarshal(p1Json, p2)
 	if err != nil {
 		return
-	}*/
-	jsoniter.Unmarshal(p1Json, p2)
+	}
+	// jsoniter.Unmarshal(p1Json, p2)
 	fmt.Println(p2)
 	fmt.Println(jsoniter.Get(p1Json, "names").ToString())
 	nilStruct, _ := json.Marshal(struct{}{})

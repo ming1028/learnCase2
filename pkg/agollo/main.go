@@ -13,6 +13,7 @@ import (
 var apolloConfig *config.AppConfig
 var agolloFuncMap template.FuncMap = template.FuncMap{
 	"key": func(key string) string {
+		fmt.Println(key)
 		// 远程获取key对应的配置值
 		return key
 	},
