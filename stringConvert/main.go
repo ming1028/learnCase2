@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/spf13/cast"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 	"strconv"
 	"strings"
 	"unicode"
@@ -21,7 +22,8 @@ func main() {
 	strConFloat, err := strconv.ParseFloat(stringFloat, 32) // 转换成float32
 	fmt.Printf("%T, %v\n", strConFloat, err)
 
-	strConFloat64, err := strconv.ParseFloat(stringFloat, 64) // 转换成float32
+	// bitSize最大范围
+	strConFloat64, err := strconv.ParseFloat(stringFloat, 64) // 转换成float64
 	fmt.Printf("%T, %v\n", strConFloat64, err)
 
 	boolStr := "true"
@@ -35,7 +37,7 @@ func main() {
 	s1, s2 := "hello", "lalala"
 	fmt.Println("前缀", strings.HasPrefix(s1, "H"), strings.HasPrefix(s1, "h"))
 	fmt.Println("索引", strings.Index(s2, "k")) // strings.Index() 不存在返回-1
-	fmt.Println("前缀", strings.HasPrefix(s1, ""), s1[0:len("")], len(""))
+	fmt.Println("前缀", strings.HasPrefix(s1, ""), s1[0:len("")], len(""), s1[0:0])
 	fmt.Println("后缀", strings.HasSuffix(s1, ""))
 
 	fmt.Println("大小写", strings.ToUpper(s1), strings.ToLower(s1), strings.ToTitle(s1))
@@ -78,6 +80,8 @@ func main() {
 	fmt.Println(strings.ToTitle("hello world"))
 	fmt.Println(strings.ToUpper(s1))
 	fmt.Println(strings.Title("hello world"))
+	c := cases.Title(language.Dutch)
+	fmt.Println("cases首字母大写", c.String("hello world"))
 	fmt.Println(strings.ToLower(s1))
 
 	// 修改字符串
@@ -96,9 +100,9 @@ func main() {
 	fmt.Println(strings.Join([]string{"h", "a", "b"}, ""))
 
 	var strs strings.Builder
-	for i := 0; i < 10000; i++ {
+	/*for i := 0; i < 10000; i++ {
 		strs.WriteString(cast.ToString(i))
-	}
+	}*/
 	fmt.Println(strs.String())
 	// RUNE，unicode是ASCII的超集，在GO中称为rune，是int32类型的别名
 	// 汉字占3个byte 字符串底层是byte序列

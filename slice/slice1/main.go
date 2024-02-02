@@ -15,6 +15,8 @@ func main() {
 	fmt.Println("cap(lockorder) = ", cap(lockorder))
 
 	sli4 := []int{1, 2, 3, 4, 5, 0, 0, 0, 0, 0}
+	str := "123"
+	fmt.Println("sli4:", str[3:])
 	sli := sli4[:5:5]
 	fmt.Println(sli)
 	sli2 := sli4[5:]

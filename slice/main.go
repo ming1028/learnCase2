@@ -30,6 +30,7 @@ func main() {
 
 	a1 := [2]string{"张三", "李四"}
 	s1 := a1[0:1]
+	fmt.Println("s1:", a1[0:0])
 	s2 := a1[:]
 	fmt.Println((*reflect.SliceHeader)(unsafe.Pointer(&s1)).Data)
 	fmt.Println((*reflect.SliceHeader)(unsafe.Pointer(&s2)).Data)
