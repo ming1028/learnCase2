@@ -17,7 +17,7 @@ go get github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
 go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
 ```
 
-* proto声称命令
+* proto生成命令
 
 ```
 -I或者--proto_path=  .proto搜索路径,不指定表示在当前路径
