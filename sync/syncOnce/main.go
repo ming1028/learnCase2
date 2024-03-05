@@ -25,5 +25,6 @@ func doOnce() {
 	}
 	for i := 0; i < 10; i++ {
 		<-done
+		fmt.Println(i)
 	}
 }

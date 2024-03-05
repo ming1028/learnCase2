@@ -17,7 +17,7 @@ func main() {
 	pName := (*string)(unsafe.Pointer(p)) // p在内存中的起始位置也是Name的内存位置
 	*pName = "张三"
 	// 内存偏移量计算 uintptr(unsafe.Pointer(p)) p在内存起始位置
-	// unsafe.Offsetof(p.Age) Age内存大小
+	// unsafe.Offsetof(p.Age) Age内存大小 相对于结构体起始值的偏移量
 	// 进行指针运算，先通过unsafe.Pointer转换为uintptr类型的指针
 	// 赋值或者取值操作还需要通过unsafe.Pointer转换为真实的指针类型
 	pAge := (*int)(unsafe.Pointer(uintptr(unsafe.Pointer(p)) + unsafe.Offsetof(p.Age)))
