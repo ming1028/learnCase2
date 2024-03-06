@@ -427,7 +427,7 @@ rwLock.RUnlock //解读锁
 
 ### cap函数作用
 
-* arry 返回数组的元素个数；
+* array 返回数组的元素个数；
 * slice 返回 slice 的最大容量；
 * channel 返回 channel 的容量
 
